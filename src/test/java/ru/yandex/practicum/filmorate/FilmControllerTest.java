@@ -47,15 +47,7 @@ public class FilmControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(filmJson))
                 .andExpect(status().isOk())
-                .andExpect(content().json("""
-                    {
-                        "id": 1,
-                        "name": "film",
-                        "description": "comedy",
-                        "releaseDate": "2020-01-01",
-                        "duration": 120
-                    }
-                """, false));
+                .andExpect(content().json("{\"id\":1,\"name\":\"film\",\"description\":\"comedy\",\"releaseDate\":\"2020-01-01\",\"duration\":120}", false));
     }
 
     @Test
@@ -72,11 +64,7 @@ public class FilmControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(filmJson))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().json("""
-                {
-                    "error": "%s"
-                }
-                """.formatted(FilmController.BLANK_NAME)));
+                .andExpect(content().json("{\"error\":\"%s\"}".formatted(FilmController.BLANK_NAME)));
     }
 
     @Test
@@ -93,11 +81,7 @@ public class FilmControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(filmJson))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().json("""
-                {
-                    "error": "%s"
-                }
-                """.formatted(FilmController.LONG_DESCRIPTION)));
+                .andExpect(content().json("{\"error\":\"%s\"}".formatted(FilmController.LONG_DESCRIPTION)));
     }
 
     @Test
@@ -114,10 +98,6 @@ public class FilmControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(filmJson))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().json("""
-                {
-                    "error": "%s"
-                }
-                """.formatted(FilmController.WRONG_RELEASE_DATE)));
+                .andExpect(content().json("{\"error\":\"%s\"}".formatted(FilmController.WRONG_RELEASE_DATE)));
     }
 }
