@@ -48,13 +48,13 @@ public class FilmControllerTest {
                         .content(filmJson))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
-                    {
-                        "id": 1,
-                        "name": "film",
-                        "description": "comedy",
-                        "releaseDate": "2020-01-01",
-                        "duration": 120
-                    }
+                {
+                    "id": 1,
+                    "name": "film",
+                    "description": "comedy",
+                    "releaseDate": "2020-01-01",
+                    "duration": 120
+                }
                 """, false));
     }
 
@@ -73,9 +73,9 @@ public class FilmControllerTest {
                         .content(filmJson))
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().json("""
-                    {
-                        "error": "%s"
-                    }
+                {
+                    "error": "%s"
+                }
                 """.formatted(FilmController.BLANK_NAME)));
     }
 
@@ -94,9 +94,9 @@ public class FilmControllerTest {
                         .content(filmJson))
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().json("""
-                    {
-                        "error": "%s"
-                    }
+                {
+                    "error": "%s"
+                }
                 """.formatted(FilmController.LONG_DESCRIPTION)));
     }
 
@@ -115,9 +115,9 @@ public class FilmControllerTest {
                         .content(filmJson))
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().json("""
-                    {
-                        "error": "%s"
-                    }
+                {
+                    "error": "%s"
+                }
                 """.formatted(FilmController.WRONG_RELEASE_DATE)));
     }
 }
