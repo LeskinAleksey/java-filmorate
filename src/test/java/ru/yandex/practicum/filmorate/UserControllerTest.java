@@ -47,15 +47,7 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().isOk())
-                .andExpect(content().json("""
-                {
-                    "id": 1,
-                    "email": "test@example.com",
-                    "login": "testuser",
-                    "name": "Test User",
-                    "birthday": "1990-01-01"
-                }
-                """, false));
+                .andExpect(content().json("{\"id\":1,\"email\":\"test@example.com\",\"login\":\"testuser\",\"name\":\"Test User\",\"birthday\":\"1990-01-01\"}", false));
     }
 
     @Test
@@ -72,11 +64,7 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().json("""
-                        {
-                            "error": "%s"
-                        }
-                        """.formatted(UserController.BLANK_EMAIL)));
+                .andExpect(content().json("{\"error\":\"%s\"}".formatted(UserController.BLANK_EMAIL)));
     }
 
     @Test
@@ -92,11 +80,7 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().json("""
-                        {
-                            "error": "%s"
-                        }
-                        """.formatted(UserController.BLANK_LOGIN)));
+                .andExpect(content().json("{\"error\":\"%s\"}".formatted(UserController.BLANK_LOGIN)));
     }
 
     @Test
@@ -113,11 +97,7 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().json("""
-                        {
-                            "error": "%s"
-                        }
-                        """.formatted(UserController.WRONG_BIRTHDAY)));
+                .andExpect(content().json("{\"error\":\"%s\"}".formatted(UserController.WRONG_BIRTHDAY)));
     }
 
 }
