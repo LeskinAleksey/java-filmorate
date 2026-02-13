@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleValidationException(ValidationException e) {
         Map<String, String> error = new HashMap<>();
         error.put("error", e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
                     errors.setError(errorMessage);
             }
         });
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errors);
     }
 
     @ExceptionHandler(Exception.class)
