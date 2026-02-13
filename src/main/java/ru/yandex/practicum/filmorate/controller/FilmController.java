@@ -1,12 +1,12 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,10 +28,7 @@ public class FilmController {
     }
 
     @PostMapping
-    public Film create(@RequestBody Film film) {
-        if (!isValid(film)) {
-            return null;
-        }
+    public Film create(@Valid @RequestBody Film film) {
         film.setId(getNextId());
         films.put(film.getId(), film);
         log.info("Фильм с id " + film.getId() + " добавлен");
@@ -39,10 +36,7 @@ public class FilmController {
     }
 
     @PutMapping
-    public Film update(@RequestBody Film film) {
-        if (!isValid(film)) {
-            return null;
-        }
+    public Film update(@Valid @RequestBody Film film) {
         if (!films.containsKey(film.getId())) {
             throw new ValidationException("Фильм с id " + film.getId() + " не найден");
         }
@@ -51,24 +45,11 @@ public class FilmController {
         return film;
     }
 
-    private Boolean isValid(Film film) {
-        if (film.getName() == null || film.getName().isBlank()) {
-            throw new ValidationException(BLANK_NAME);
-        }
-        if (film.getDescription().length() > 200) {
-            throw new ValidationException(LONG_DESCRIPTION);
-        }
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
-            throw new ValidationException(WRONG_RELEASE_DATE);
-        }
-        if (film.getDuration() <= 0) {
-            throw new ValidationException(WRONG_DURATION);
-        }
-        return true;
-    }
-
     private Long getNextId() {
-        Long currentMaxId = films.keySet().stream().mapToLong(Long::longValue).max().orElse(0L);
+        Long currentMaxId = films.keySet().stream()
+                .mapToLong(Long::longValue)
+                .max()
+                .orElse(0L);
         return ++currentMaxId;
     }
 }
